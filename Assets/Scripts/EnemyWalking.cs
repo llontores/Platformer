@@ -7,23 +7,26 @@ public class EnemyWalking : MonoBehaviour
     [SerializeField] private Transform _path;
     [SerializeField] private float _speed;
 
-    private SpriteRenderer _sr;
+    private SpriteRenderer _spriteRenderer;
     private Transform[] _points;
     private int _counter;
-    private int _leftEdge;
-    private int _rightEdge;
+    private int _leftEdgeIndex = 1;
+    private int _rightEdgeIndex = 1;
+    private Transform _leftEdge;
+    private Transform _rightEdge;
 
     private void Start()
     {
-        _leftEdge = 0;
-        _rightEdge = 1;
-        _sr = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _points = new Transform[_path.childCount];
 
         for (int i = 0; i < _path.childCount; i++)
         {
             _points[i] = _path.GetChild(i);
         }
+
+        _leftEdge = _points[_leftEdgeIndex];
+        _rightEdge = _points[_rightEdgeIndex];
     }
 
     private void Update()
@@ -41,13 +44,9 @@ public class EnemyWalking : MonoBehaviour
             }
         }
 
-        if (_counter == _leftEdge)
-        {
-            _sr.flipX = true;
-        }
+        if (transform.position == _leftEdge.position)
+            _spriteRenderer.flipX = true;       
         else
-        {
-            _sr.flipX= false;
-        }
+            _spriteRenderer.flipX= false;
     }
 }
