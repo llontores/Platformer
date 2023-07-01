@@ -13,7 +13,7 @@ public class EnemyWalking : MonoBehaviour
     private int _leftEdge;
     private int _rightEdge;
 
-    void Start()
+    private void Start()
     {
         _leftEdge = 0;
         _rightEdge = 1;
@@ -26,7 +26,7 @@ public class EnemyWalking : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         Transform target = _points[_counter];
         transform.position = Vector3.MoveTowards(transform.position, target.position, _speed * Time.deltaTime);
@@ -45,7 +45,7 @@ public class EnemyWalking : MonoBehaviour
         {
             _sr.flipX = true;
         }
-        else if(_counter == _rightEdge)
+        else
         {
             _sr.flipX= false;
         }

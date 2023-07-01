@@ -6,17 +6,20 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Player : MonoBehaviour
 {
+    private const string RunningAnimationBool = "IsRunning";
+    private const string JumpingAnimationBool = "IsJumping";
+
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
 
     private SpriteRenderer _spriteRenderer;
-    private Rigidbody2D _rb2d;
+    private Rigidbody2D _rigidBody2D;
     private Animator _animator;
     private bool _isGrounded;
 
     private void Start()
     {
-        _rb2d = GetComponent<Rigidbody2D>();
+        _rigidBody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
     }
@@ -29,24 +32,24 @@ public class Player : MonoBehaviour
         {
             transform.Translate(_speed * Time.deltaTime, 0, 0);
             _spriteRenderer.flipX = false;
-            _animator.SetBool("IsRunning", true);
+            _animator.SetBool(RunningAnimationBool, true);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             transform.Translate(_speed * Time.deltaTime * -1, 0, 0);
             _spriteRenderer.flipX = true;
-            _animator.SetBool("IsRunning", true);
+            _animator.SetBool(RunningAnimationBool, true);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            _rb2d.AddForce(Vector2.up * _jumpForce);
-            _animator.SetBool("IsJumping", true);
+            _rigidBody2D.AddForce(Vector2.up * _jumpForce);
+            _animator.SetBool(JumpingAnimationBool, true);
             _isGrounded = false;
         }
         else
         {
-            _animator.SetBool("IsJumping", false);
-            _animator.SetBool("IsRunning", false);
+            _animator.SetBool(JumpingAnimationBool, false);
+            _animator.SetBool(RunningAnimationBool, false);
         }
     }
 }
