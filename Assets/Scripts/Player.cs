@@ -22,11 +22,13 @@ public class Player : MonoBehaviour
         _rigidBody2D = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _isGrounded = true;
     }
 
     private void Update()
     {
-        _isGrounded = true;
+
+        Debug.Log(_isGrounded);
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -50,6 +52,14 @@ public class Player : MonoBehaviour
         {
             _animator.SetBool(JumpingAnimationBool, false);
             _animator.SetBool(RunningAnimationBool, false);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.TryGetComponent(out Ground ground))
+        {
+            _isGrounded = true;
         }
     }
 }
