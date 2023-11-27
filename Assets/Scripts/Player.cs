@@ -4,6 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+
 public class Player : MonoBehaviour
 {
     private const string RunningAnimationBool = "IsRunning";
